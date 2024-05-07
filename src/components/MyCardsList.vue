@@ -1,4 +1,5 @@
 <script>
+  import { store } from "../store";
   import MyCard from "./MyCard.vue";
 
   export default {
@@ -9,7 +10,9 @@
         cardsArray: Array,
     },
     data() {
-        return {};
+        return {
+            store,
+        };
     },
   };
 
