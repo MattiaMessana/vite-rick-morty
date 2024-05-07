@@ -4,17 +4,20 @@
   import MyTitle from "./components/MyTitle.vue";
   import MyCardsList from "./components/MyCardsList.vue";
   import MySearchBar from "./components/MySearchBar.vue";
+  import MyLoader from "./components/MyLoader.vue";
 
   export default {
     components: {
       MyTitle,
       MyCardsList,
       MySearchBar,
+      MyLoader,
 
     },
     data() {
       return {
         store,
+        loading: false,
       };
     },
     created() {
@@ -22,7 +25,8 @@
     }, 
     methods: {
       getCards() {
-
+        this.loading = true;
+        
         const paramsObj = {
           status: "",
         }
@@ -37,6 +41,7 @@
         })
         .then((resp) => {
         this.store.cardsList = resp.data.results;
+        this.loading = false;
         })
         
       }
@@ -50,7 +55,8 @@
 
   <MyTitle />
   <MySearchBar @filter="getCards"/>
-  <MyCardsList :cardsArray="store.cardsList"/>
+  <MyLoader v-if="loading"/>
+  <MyCardsList v-else :cardsArray="store.cardsList"/>
 
 </template>
 
